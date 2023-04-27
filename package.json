@@ -21,7 +21,7 @@
 		"dev": "tsc --watch",
 		"build": "tsc",
 		"prepare": "npm run build",
-		"test": "tsc --noEmit && xo && FORCE_COLOR=true ava",
+		"test": "tsc --noEmit && xo",
 		"example": "NODE_NO_WARNINGS=1 node --loader=ts-node/esm"
 	},
 	"files": [

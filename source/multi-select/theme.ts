@@ -7,6 +7,7 @@ const theme: ComponentTheme = {
 		'selectedIndicator',
 		'focusIndicator',
 		'label',
+		'highlightedText',
 	],
 	baseStyle: {
 		container: {
@@ -34,6 +35,9 @@ const theme: ComponentTheme = {
 			}
 
 			return {color};
+		},
+		highlightedText: {
+			bold: true,
 		},
 	},
 	defaultProps: {

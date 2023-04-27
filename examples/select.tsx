@@ -49,4 +49,4 @@ function Example() {
 	);
 }
 
-render(<Example />);
+render(<Example />, {debug: true});
