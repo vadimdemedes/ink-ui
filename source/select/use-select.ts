@@ -1,6 +1,5 @@
 import {useInput} from 'ink';
 import {type SelectState} from './use-select-state.js';
-import {type Option} from './types.js';
 
 export type UseSelectProps = {
 	/**
