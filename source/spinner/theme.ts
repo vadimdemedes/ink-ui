@@ -1,4 +1,4 @@
-import {ComponentTheme} from '../theme.js';
+import {type ComponentTheme} from '../theme.js';
 
 const theme: ComponentTheme = {
 	parts: ['root', 'frame', 'label'],

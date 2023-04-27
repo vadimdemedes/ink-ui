@@ -64,6 +64,10 @@ export const useTextInput = ({
 	const renderedValue = useMemo(() => {
 		const value = mask ? mask.repeat(state.value.length) : state.value;
 
+		if (!isFocused) {
+			return value;
+		}
+
 		let index = 0;
 		let result = value.length > 0 ? '' : cursor;
 

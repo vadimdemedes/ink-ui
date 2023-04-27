@@ -1,13 +1,11 @@
-import {ComponentTheme} from '../theme.js';
+import {type ComponentTheme} from '../theme.js';
 
 const theme: ComponentTheme = {
 	parts: ['root', 'label'],
 	baseStyle: {
-		root: ({color}) => {
-			return {
-				backgroundColor: color,
-			};
-		},
+		root: ({color}) => ({
+			backgroundColor: color,
+		}),
 		label: {
 			color: 'black',
 		},

@@ -12,16 +12,11 @@ export type UseSelectProps = {
 	 * Select state.
 	 */
 	state: SelectState;
-
-	/**
-	 * Options.
-	 */
-	options: Option[];
 };
 
 export const useSelect = ({isFocused, state}: UseSelectProps) => {
 	useInput(
-		(input, key) => {
+		(_input, key) => {
 			if (key.downArrow) {
 				state.focusNextOption();
 			}
@@ -30,7 +25,7 @@ export const useSelect = ({isFocused, state}: UseSelectProps) => {
 				state.focusPreviousOption();
 			}
 
-			if (input === ' ' || key.return) {
+			if (key.return) {
 				state.selectFocusedOption();
 			}
 		},

@@ -38,34 +38,39 @@ const deleteText = (source: string, at: number) => {
 
 const reducer: Reducer<State, Action> = (state, action) => {
 	switch (action.type) {
-		case 'move-cursor-left':
+		case 'move-cursor-left': {
 			return {
 				...state,
 				cursorOffset: Math.max(0, state.cursorOffset - 1),
 			};
+		}
 
-		case 'move-cursor-right':
+		case 'move-cursor-right': {
 			return {
 				...state,
 				cursorOffset: Math.min(state.value.length, state.cursorOffset + 1),
 			};
+		}
 
-		case 'insert':
+		case 'insert': {
 			return {
 				...state,
 				value: insertText(state.value, action.text, state.cursorOffset),
 				cursorOffset: state.cursorOffset + action.text.length,
 			};
+		}
 
-		case 'delete':
+		case 'delete': {
 			return {
 				...state,
 				value: deleteText(state.value, state.cursorOffset),
 				cursorOffset: Math.max(0, state.cursorOffset - 1),
 			};
+		}
 
-		default:
+		default: {
 			return state;
+		}
 	}
 };
 

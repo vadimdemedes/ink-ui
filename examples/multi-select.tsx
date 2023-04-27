@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import {render, Box, Text} from 'ink';
-import {Select} from '../source/index.js';
+import {MultiSelect} from '../source/index.js';
 
 function Example() {
-	const [value, setValue] = useState<string | undefined>();
+	const [value, setValue] = useState<string[] | undefined>();
 
 	return (
 		<Box>
 			{!value && (
-				<Select
+				<MultiSelect
 					defaultLimit={5}
 					options={[
 						{
@@ -40,11 +40,11 @@ function Example() {
 							value: 'white',
 						},
 					]}
-					onChange={setValue}
+					onSubmit={setValue}
 				/>
 			)}
 
-			{value && <Text>You've selected {value}</Text>}
+			{value && <Text>You've selected {value.join(', ')}</Text>}
 		</Box>
 	);
 }

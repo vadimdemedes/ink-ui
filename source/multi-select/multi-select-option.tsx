@@ -3,7 +3,7 @@ import {Box, Text} from 'ink';
 import figures from 'figures';
 import {useMultiStyleConfig} from '../theme.js';
 
-export type SelectOptionProps = {
+export type MultiSelectOptionProps = {
 	/**
 	 * Determines if option is focused.
 	 */
@@ -20,12 +20,12 @@ export type SelectOptionProps = {
 	children: ReactNode;
 };
 
-export function SelectOption({
+export function MultiSelectOption({
 	isFocused,
 	isSelected,
 	children,
-}: SelectOptionProps) {
-	const styles = useMultiStyleConfig('Select', {isFocused, isSelected});
+}: MultiSelectOptionProps) {
+	const styles = useMultiStyleConfig('MultiSelect', {isFocused, isSelected});
 
 	return (
 		<Box {...styles['option']}>

@@ -1,5 +1,6 @@
 import {createContext, useContext} from 'react';
 import badgeTheme from './badge/theme.js';
+import multiSelectTheme from './multi-select/theme.js';
 import selectTheme from './select/theme.js';
 import spinnerTheme from './spinner/theme.js';
 
@@ -22,12 +23,16 @@ export type ComponentStyles = Record<string, unknown>;
 
 export const defaultTheme: Theme = {
 	components: {
+		/* eslint-disable @typescript-eslint/naming-convention */
 		Badge: badgeTheme,
+		MultiSelect: multiSelectTheme,
 		Select: selectTheme,
 		Spinner: spinnerTheme,
+		/* eslint-enable @typescript-eslint/naming-convention */
 	},
 };
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const ThemeContext = createContext<Theme>(defaultTheme);
 
 export const useMultiStyleConfig = (

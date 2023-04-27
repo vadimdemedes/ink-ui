@@ -29,15 +29,15 @@ type State = {
 	visibleToIndex: number;
 
 	/**
-	 * Index of the selected option.
+	 * Indexes of selected options.
 	 */
-	selectedIndex: number | undefined;
+	selectedIndexes: number[];
 };
 
 type Action =
 	| FocusNextOptionAction
 	| FocusPreviousOptionAction
-	| SelectFocusedOptionAction
+	| ToggleFocusedOptionAction
 	| ResetAction;
 
 type FocusNextOptionAction = {
@@ -48,8 +48,8 @@ type FocusPreviousOptionAction = {
 	type: 'focus-previous-option';
 };
 
-type SelectFocusedOptionAction = {
-	type: 'select-focused-option';
+type ToggleFocusedOptionAction = {
+	type: 'toggle-focused-option';
 };
 
 type ResetAction = {
@@ -113,10 +113,20 @@ const reducer: Reducer<State, Action> = (state, action) => {
 			};
 		}
 
-		case 'select-focused-option': {
+		case 'toggle-focused-option': {
+			if (state.selectedIndexes.includes(state.focusedIndex)) {
+				const newSelectedIndexes = new Set(state.selectedIndexes);
+				newSelectedIndexes.delete(state.focusedIndex);
+
+				return {
+					...state,
+					selectedIndexes: [...newSelectedIndexes],
+				};
+			}
+
 			return {
 				...state,
-				selectedIndex: state.focusedIndex,
+				selectedIndexes: [...state.selectedIndexes, state.focusedIndex],
 			};
 		}
 
@@ -130,7 +140,7 @@ const reducer: Reducer<State, Action> = (state, action) => {
 	}
 };
 
-export type UseSelectStateProps = {
+export type UseMultiSelectStateProps = {
 	/**
 	 * Number of items to display.
 	 */
@@ -142,19 +152,19 @@ export type UseSelectStateProps = {
 	options: Option[];
 
 	/**
-	 * Initially selected option's value.
+	 * Initially selected option values.
 	 */
-	defaultValue?: string;
+	defaultValue?: string[];
 
 	/**
-	 * Callback for selecting an option.
+	 * Callback for selecting options.
 	 */
-	onChange?: (value: string) => void;
+	onChange?: (value: string[]) => void;
 };
 
-export type SelectState = Pick<
+export type MultiSelectState = Pick<
 	State,
-	'focusedIndex' | 'visibleFromIndex' | 'visibleToIndex' | 'selectedIndex'
+	'focusedIndex' | 'visibleFromIndex' | 'visibleToIndex' | 'selectedIndexes'
 > & {
 	/**
 	 * Visible options.
@@ -174,25 +184,34 @@ export type SelectState = Pick<
 	/**
 	 * Select currently focused option.
 	 */
-	selectFocusedOption: () => void;
+	toggleFocusedOption: () => void;
 };
 
 const createDefaultState = ({
 	defaultLimit,
 	defaultValue,
 	options,
-}: Pick<UseSelectStateProps, 'defaultLimit' | 'defaultValue' | 'options'>) => {
+}: Pick<
+	UseMultiSelectStateProps,
+	'defaultLimit' | 'defaultValue' | 'options'
+>) => {
 	const limit =
 		typeof defaultLimit === 'number'
 			? Math.min(defaultLimit, options.length)
 			: options.length;
 
-	let selectedIndex: number | undefined;
+	const selectedIndexes: number[] = [];
 
 	if (defaultValue) {
-		selectedIndex = options.findIndex(option => {
-			return option.value === defaultValue;
-		});
+		let index = 0;
+
+		for (const option of options) {
+			if (defaultValue.includes(option.value)) {
+				selectedIndexes.push(index);
+			}
+
+			index++;
+		}
 	}
 
 	return {
@@ -201,16 +220,16 @@ const createDefaultState = ({
 		focusedIndex: 0,
 		visibleFromIndex: 0,
 		visibleToIndex: limit,
-		selectedIndex,
+		selectedIndexes,
 	};
 };
 
-export const useSelectState = ({
+export const useMultiSelectState = ({
 	defaultLimit,
 	options,
 	defaultValue,
 	onChange,
-}: UseSelectStateProps) => {
+}: UseMultiSelectStateProps) => {
 	const [state, dispatch] = useReducer(
 		reducer,
 		{defaultLimit, defaultValue, options},
@@ -240,17 +259,38 @@ export const useSelectState = ({
 		});
 	}, []);
 
-	const selectFocusedOption = useCallback(() => {
+	const toggleFocusedOption = useCallback(() => {
 		dispatch({
-			type: 'select-focused-option',
+			type: 'toggle-focused-option',
 		});
 
-		const option = options[state.focusedIndex];
+		if (typeof onChange === 'function') {
+			const isAlreadySelected = state.selectedIndexes.includes(
+				state.focusedIndex,
+			);
 
-		if (option) {
-			onChange?.(option.value);
+			let selectedOptions: Option[];
+
+			if (isAlreadySelected) {
+				selectedOptions = options.filter((_option, index) => {
+					return (
+						state.selectedIndexes.includes(index) &&
+						index !== state.focusedIndex
+					);
+				});
+			} else {
+				selectedOptions = options.filter((_option, index) => {
+					return (
+						state.selectedIndexes.includes(index) &&
+						index === state.focusedIndex
+					);
+				});
+			}
+
+			const newValue = selectedOptions.map(option => option.value);
+			onChange(newValue);
 		}
-	}, [options, state.focusedIndex, onChange]);
+	}, [options, state.focusedIndex, state.selectedIndexes, onChange]);
 
 	const visibleOptions = useMemo(() => {
 		return options
@@ -265,10 +305,10 @@ export const useSelectState = ({
 		focusedIndex: state.focusedIndex,
 		visibleFromIndex: state.visibleFromIndex,
 		visibleToIndex: state.visibleToIndex,
-		selectedIndex: state.selectedIndex,
+		selectedIndexes: state.selectedIndexes,
 		visibleOptions,
 		focusNextOption,
 		focusPreviousOption,
-		selectFocusedOption,
+		toggleFocusedOption,
 	};
 };

@@ -1,5 +1,5 @@
-import {Text, TextProps} from 'ink';
-import React, {ReactNode} from 'react';
+import {Text, type TextProps} from 'ink';
+import React, {type ReactNode} from 'react';
 import {useMultiStyleConfig} from '../theme.js';
 
 export type BadgeProps = {

@@ -30,9 +30,9 @@ export type SelectProps = {
 	defaultValue?: string;
 
 	/**
-	 * Callback for selecting an option.
+	 * Callback when selected option changes.
 	 */
-	onChange: (value: string) => void;
+	onChange?: (value: string) => void;
 };
 
 export function Select({
@@ -43,7 +43,7 @@ export function Select({
 	onChange,
 }: SelectProps) {
 	const state = useSelectState({defaultLimit, options, defaultValue, onChange});
-	useSelect({isFocused, state, options});
+	useSelect({isFocused, state});
 
 	const styles = useMultiStyleConfig('Select');
 
