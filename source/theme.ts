@@ -5,6 +5,7 @@ import multiSelectTheme from './multi-select/theme.js';
 import progressBarTheme from './progress-bar/theme.js';
 import selectTheme from './select/theme.js';
 import spinnerTheme from './spinner/theme.js';
+import orderedListTheme from './ordered-list/theme.js';
 import unorderedListTheme from './unordered-list/theme.js';
 
 export type Theme = {
@@ -33,6 +34,7 @@ export const defaultTheme: Theme = {
 		ProgressBar: progressBarTheme,
 		Select: selectTheme,
 		Spinner: spinnerTheme,
+		OrderedList: orderedListTheme,
 		UnorderedList: unorderedListTheme,
 		/* eslint-enable @typescript-eslint/naming-convention */
 	},

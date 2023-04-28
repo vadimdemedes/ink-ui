@@ -25,7 +25,7 @@ export type UnorderedListProps = {
 
 export function UnorderedList({children, marker}: UnorderedListProps) {
 	const {depth, markers} = useContext(UnorderedListContext);
-	const styles = useMultiStyleConfig('UnorderedList', {depth});
+	const styles = useMultiStyleConfig('UnorderedList');
 
 	const listContext = useMemo(
 		() => ({

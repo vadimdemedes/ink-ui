@@ -8,6 +8,7 @@ function Example() {
 			<UnorderedList.Item>
 				<Text>Red</Text>
 			</UnorderedList.Item>
+
 			<UnorderedList.Item>
 				<Text>Green</Text>
 
@@ -15,14 +16,17 @@ function Example() {
 					<UnorderedList.Item>
 						<Text>Light</Text>
 					</UnorderedList.Item>
+
 					<UnorderedList.Item>
 						<Text>Normal</Text>
 					</UnorderedList.Item>
+
 					<UnorderedList.Item>
 						<Text>Dark</Text>
 					</UnorderedList.Item>
 				</UnorderedList>
 			</UnorderedList.Item>
+
 			<UnorderedList.Item>
 				<Text>Yellow</Text>
 			</UnorderedList.Item>

@@ -7,3 +7,4 @@ export * from './select/select.js';
 export * from './spinner/index.js';
 export * from './text-input/index.js';
 export * from './theme.js';
+export * from './ordered-list/index.js';
