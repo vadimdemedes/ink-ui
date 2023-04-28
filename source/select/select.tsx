@@ -15,7 +15,9 @@ export type SelectProps = {
 	isFocused?: boolean;
 
 	/**
-	 * Number of items to display.
+	 * Number of options to display at once.
+	 *
+	 * @default 6
 	 */
 	defaultLimit?: number;
 
@@ -43,7 +45,7 @@ export type SelectProps = {
 
 export function Select({
 	isFocused = true,
-	defaultLimit,
+	defaultLimit = 6,
 	highlightText,
 	options,
 	defaultValue,
@@ -85,3 +87,5 @@ export function Select({
 		</Box>
 	);
 }
+
+Select.Option = SelectOption;

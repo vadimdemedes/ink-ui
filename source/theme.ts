@@ -1,8 +1,11 @@
 import {createContext, useContext} from 'react';
 import badgeTheme from './badge/theme.js';
+import confirmInputTheme from './confirm-input/theme.js';
 import multiSelectTheme from './multi-select/theme.js';
+import progressBarTheme from './progress-bar/theme.js';
 import selectTheme from './select/theme.js';
 import spinnerTheme from './spinner/theme.js';
+import unorderedListTheme from './unordered-list/theme.js';
 
 export type Theme = {
 	components: Record<string, ComponentTheme>;
@@ -25,9 +28,12 @@ export const defaultTheme: Theme = {
 	components: {
 		/* eslint-disable @typescript-eslint/naming-convention */
 		Badge: badgeTheme,
+		ConfirmInput: confirmInputTheme,
 		MultiSelect: multiSelectTheme,
+		ProgressBar: progressBarTheme,
 		Select: selectTheme,
 		Spinner: spinnerTheme,
+		UnorderedList: unorderedListTheme,
 		/* eslint-enable @typescript-eslint/naming-convention */
 	},
 };

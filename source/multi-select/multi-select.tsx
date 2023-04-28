@@ -15,7 +15,9 @@ export type MultiSelectProps = {
 	isFocused?: boolean;
 
 	/**
-	 * Number of items to display.
+	 * Number of options to display at once.
+	 *
+	 * @default 6
 	 */
 	defaultLimit?: number;
 
@@ -49,7 +51,7 @@ export type MultiSelectProps = {
 
 export function MultiSelect({
 	isFocused = true,
-	defaultLimit,
+	defaultLimit = 6,
 	highlightText,
 	options,
 	defaultValue,
@@ -98,3 +100,5 @@ export function MultiSelect({
 		</Box>
 	);
 }
+
+MultiSelect.Option = MultiSelectOption;
