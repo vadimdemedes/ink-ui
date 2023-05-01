@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {render, Box, Text} from 'ink';
-import {TextInput} from '../source/index.js';
+import {MaskInput} from '../source/index.js';
 
 function Example() {
 	const [value, setValue] = useState<string | undefined>();
@@ -8,7 +8,11 @@ function Example() {
 	return (
 		<Box>
 			{!value && (
-				<TextInput placeholder="Start typing..." onSubmit={setValue} />
+				<MaskInput
+					placeholder="DD/MM/YYYY"
+					mask="11/11/1111"
+					onSubmit={setValue}
+				/>
 			)}
 
 			{value && <Text>You've entered "{value}"</Text>}

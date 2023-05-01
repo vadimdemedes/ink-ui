@@ -1,9 +1,9 @@
 import {useMemo} from 'react';
 import {useInput} from 'ink';
 import chalk from 'chalk';
-import {type TextInputState} from './use-text-input-state.js';
+import {type MaskInputState} from './use-mask-input-state.js';
 
-export type UseTextInputProps = {
+export type UseMaskInputProps = {
 	/**
 	 * Listen to user's input. Useful in case there are multiple input components
 	 * at the same time and input must be "routed" to a specific component.
@@ -15,7 +15,7 @@ export type UseTextInputProps = {
 	/**
 	 * Text input state.
 	 */
-	state: TextInputState;
+	state: MaskInputState;
 
 	/**
 	 * Text to display when `value` is empty.
@@ -23,11 +23,6 @@ export type UseTextInputProps = {
 	 * @default ""
 	 */
 	placeholder?: string;
-
-	/**
-	 * Replace all chars and mask the value. Useful for password inputs.
-	 */
-	mask?: string;
 };
 
 export type UseTextInputResult = {
@@ -37,46 +32,44 @@ export type UseTextInputResult = {
 	inputValue: string;
 };
 
-const cursor = chalk.inverse(' ');
-
-export const useTextInput = ({
+export const useMaskInput = ({
 	isFocused = true,
 	state,
-	mask,
-	placeholder = '',
-}: UseTextInputProps): UseTextInputResult => {
-	const renderedPlaceholder = useMemo(() => {
-		if (!isFocused) {
-			return placeholder ? chalk.grey(placeholder) : '';
-		}
-
-		return placeholder && placeholder.length > 0
-			? chalk.inverse(placeholder[0]) + chalk.grey(placeholder.slice(1))
-			: cursor;
-	}, [isFocused, placeholder]);
-
+}: UseMaskInputProps): UseTextInputResult => {
 	const renderedValue = useMemo(() => {
-		const value = mask ? mask.repeat(state.value.length) : state.value;
-
-		if (!isFocused) {
-			return value;
-		}
-
 		let index = 0;
-		let result = value.length > 0 ? '' : cursor;
+		let result = '';
 
-		for (const char of value) {
-			result += index === state.cursorOffset ? chalk.inverse(char) : char;
+		for (const node of state.value) {
+			if (index === state.cursorOffset) {
+				const character =
+					node.type === 'character'
+						? node.value ?? node.placeholder
+						: node.value;
 
+				result += isFocused ? chalk.inverse(character) : character;
+				index++;
+				continue;
+			}
+
+			if (node.type === 'separator') {
+				result += chalk.dim(node.value);
+				index++;
+				continue;
+			}
+
+			if (!node.value) {
+				result += chalk.dim(node.placeholder);
+				index++;
+				continue;
+			}
+
+			result += node.value;
 			index++;
 		}
 
-		if (value.length > 0 && state.cursorOffset === value.length) {
-			result += cursor;
-		}
-
 		return result;
-	}, [isFocused, mask, state.value, state.cursorOffset]);
+	}, [isFocused, state.value, state.cursorOffset]);
 
 	useInput(
 		(input, key) => {
@@ -109,6 +102,6 @@ export const useTextInput = ({
 	);
 
 	return {
-		inputValue: state.value.length > 0 ? renderedValue : renderedPlaceholder,
+		inputValue: renderedValue,
 	};
 };

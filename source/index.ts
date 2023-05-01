@@ -8,3 +8,4 @@ export * from './spinner/index.js';
 export * from './text-input/index.js';
 export * from './theme.js';
 export * from './ordered-list/index.js';
+export * from './mask-input/index.js';

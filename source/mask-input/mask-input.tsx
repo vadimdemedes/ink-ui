@@ -1,9 +1,9 @@
 import React from 'react';
 import {Text} from 'ink';
-import {useTextInputState} from './use-text-input-state.js';
-import {useTextInput} from './use-text-input.js';
+import {useMaskInputState} from './use-mask-input-state.js';
+import {useMaskInput} from './use-mask-input.js';
 
-export type TextInputProps = {
+export type MaskInputProps = {
 	/**
 	 * Listen to user's input. Useful in case there are multiple input components
 	 * at the same time and input must be "routed" to a specific component.
@@ -18,12 +18,13 @@ export type TextInputProps = {
 	placeholder?: string;
 
 	/**
-	 * Replace all chars and mask the value. Useful for password inputs.
+	 * Mask that input must conform to.
 	 */
-	mask?: string;
+	mask: string;
 
 	/**
 	 * Initial value to display in a text input.
+	 * Must conform to `mask`.
 	 */
 	defaultValue?: string;
 
@@ -38,24 +39,24 @@ export type TextInputProps = {
 	onSubmit?: (value: string) => void;
 };
 
-export function TextInput({
+export function MaskInput({
 	isFocused = true,
 	defaultValue,
 	placeholder = '',
 	mask,
 	onChange,
 	onSubmit,
-}: TextInputProps) {
-	const state = useTextInputState({
+}: MaskInputProps) {
+	const state = useMaskInputState({
 		defaultValue,
+		mask,
 		onChange,
 		onSubmit,
 	});
 
-	const {inputValue} = useTextInput({
+	const {inputValue} = useMaskInput({
 		isFocused,
 		placeholder,
-		mask,
 		state,
 	});
 

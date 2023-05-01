@@ -1,4 +1,4 @@
-import {useReducer, useCallback, type Reducer} from 'react';
+import {useReducer, useCallback, useEffect, type Reducer} from 'react';
 
 type State = {
 	value: string;
@@ -28,14 +28,6 @@ type DeleteAction = {
 	type: 'delete';
 };
 
-const insertText = (source: string, text: string, at: number) => {
-	return source.slice(0, at) + text + source.slice(at);
-};
-
-const deleteText = (source: string, at: number) => {
-	return source.slice(0, Math.max(0, at - 1)) + source.slice(at);
-};
-
 const reducer: Reducer<State, Action> = (state, action) => {
 	switch (action.type) {
 		case 'move-cursor-left': {
@@ -55,16 +47,23 @@ const reducer: Reducer<State, Action> = (state, action) => {
 		case 'insert': {
 			return {
 				...state,
-				value: insertText(state.value, action.text, state.cursorOffset),
+				value:
+					state.value.slice(0, state.cursorOffset) +
+					action.text +
+					state.value.slice(state.cursorOffset),
 				cursorOffset: state.cursorOffset + action.text.length,
 			};
 		}
 
 		case 'delete': {
+			const newCursorOffset = Math.max(0, state.cursorOffset - 1);
+
 			return {
 				...state,
-				value: deleteText(state.value, state.cursorOffset),
-				cursorOffset: Math.max(0, state.cursorOffset - 1),
+				value:
+					state.value.slice(0, newCursorOffset) +
+					state.value.slice(newCursorOffset + 1),
+				cursorOffset: newCursorOffset,
 			};
 		}
 
@@ -84,6 +83,11 @@ export type UseTextInputStateProps = {
 	 * Callback when value updates.
 	 */
 	onChange?: (value: string) => void;
+
+	/**
+	 * Callback when `Enter` is pressed. First argument is a value of the input.
+	 */
+	onSubmit?: (value: string) => void;
 };
 
 export type TextInputState = State & {
@@ -106,15 +110,21 @@ export type TextInputState = State & {
 	 * Delete character.
 	 */
 	delete: () => void;
+
+	/**
+	 * Submit input value.
+	 */
+	submit: () => void;
 };
 
 export const useTextInputState = ({
-	defaultValue,
+	defaultValue = '',
 	onChange,
+	onSubmit,
 }: UseTextInputStateProps) => {
 	const [state, dispatch] = useReducer(reducer, {
-		value: defaultValue ?? '',
-		cursorOffset: defaultValue?.length ?? 0,
+		value: defaultValue,
+		cursorOffset: defaultValue.length,
 	});
 
 	const moveCursorLeft = useCallback(() => {
@@ -129,31 +139,26 @@ export const useTextInputState = ({
 		});
 	}, []);
 
-	const insert = useCallback(
-		(text: string) => {
-			dispatch({
-				type: 'insert',
-				text,
-			});
-
-			if (typeof onChange === 'function') {
-				const updatedText = insertText(state.value, text, state.cursorOffset);
-				onChange(updatedText);
-			}
-		},
-		[state.value, state.cursorOffset, onChange],
-	);
+	const insert = useCallback((text: string) => {
+		dispatch({
+			type: 'insert',
+			text,
+		});
+	}, []);
 
 	const deleteCharacter = useCallback(() => {
 		dispatch({
 			type: 'delete',
 		});
+	}, []);
 
-		if (typeof onChange === 'function') {
-			const updatedText = deleteText(state.value, state.cursorOffset);
-			onChange(updatedText);
-		}
-	}, [state.value, state.cursorOffset, onChange]);
+	const submit = useCallback(() => {
+		onSubmit?.(state.value);
+	}, [state.value, onSubmit]);
+
+	useEffect(() => {
+		onChange?.(state.value);
+	}, [state.value, onChange]);
 
 	return {
 		...state,
@@ -161,5 +166,6 @@ export const useTextInputState = ({
 		moveCursorRight,
 		insert,
 		delete: deleteCharacter,
+		submit,
 	};
 };
