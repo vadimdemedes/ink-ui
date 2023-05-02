@@ -7,6 +7,7 @@ import selectTheme from './select/theme.js';
 import spinnerTheme from './spinner/theme.js';
 import orderedListTheme from './ordered-list/theme.js';
 import unorderedListTheme from './unordered-list/theme.js';
+import statusMessageTheme from './status-message/theme.js';
 
 export type Theme = {
 	components: Record<string, ComponentTheme>;
@@ -36,6 +37,7 @@ export const defaultTheme: Theme = {
 		Spinner: spinnerTheme,
 		OrderedList: orderedListTheme,
 		UnorderedList: unorderedListTheme,
+		StatusMessage: statusMessageTheme,
 		/* eslint-enable @typescript-eslint/naming-convention */
 	},
 };
