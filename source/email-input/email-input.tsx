@@ -1,9 +1,9 @@
 import React from 'react';
 import {Text} from 'ink';
-import {useTextInputState} from './use-text-input-state.js';
-import {useTextInput} from './use-text-input.js';
+import {useEmailInputState} from './use-email-input-state.js';
+import {useEmailInput} from './use-email-input.js';
 
-export type TextInputProps = {
+export type EmailInputProps = {
 	/**
 	 * Listen to user's input. Useful in case there are multiple input components
 	 * at the same time and input must be "routed" to a specific component.
@@ -23,9 +23,11 @@ export type TextInputProps = {
 	defaultValue?: string;
 
 	/**
-	 * Suggestions to auto complete the text input.
+	 * Domains of email providers to auto complete.
+	 *
+	 * @default ["aol.com", "gmail.com", "yahoo.com", "hotmail.com", "live.com", "outlook.com", "icloud.com", "hey.com"]
 	 */
-	suggestions?: string[];
+	domains?: string[];
 
 	/**
 	 * Callback when value updates.
@@ -38,22 +40,22 @@ export type TextInputProps = {
 	onSubmit?: (value: string) => void;
 };
 
-export function TextInput({
+export function EmailInput({
 	isFocused = true,
 	defaultValue,
 	placeholder = '',
-	suggestions,
+	domains,
 	onChange,
 	onSubmit,
-}: TextInputProps) {
-	const state = useTextInputState({
+}: EmailInputProps) {
+	const state = useEmailInputState({
 		defaultValue,
-		suggestions,
+		domains,
 		onChange,
 		onSubmit,
 	});
 
-	const {inputValue} = useTextInput({
+	const {inputValue} = useEmailInput({
 		isFocused,
 		placeholder,
 		state,

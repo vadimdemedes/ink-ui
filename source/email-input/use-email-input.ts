@@ -1,9 +1,9 @@
 import {useMemo} from 'react';
 import {useInput} from 'ink';
 import chalk from 'chalk';
-import {type TextInputState} from './use-text-input-state.js';
+import {type EmailInputState} from './use-email-input-state.js';
 
-export type UseTextInputProps = {
+export type UseEmailInputProps = {
 	/**
 	 * Listen to user's input. Useful in case there are multiple input components
 	 * at the same time and input must be "routed" to a specific component.
@@ -15,7 +15,7 @@ export type UseTextInputProps = {
 	/**
 	 * Text input state.
 	 */
-	state: TextInputState;
+	state: EmailInputState;
 
 	/**
 	 * Text to display when `value` is empty.
@@ -34,11 +34,11 @@ export type UseTextInputResult = {
 
 const cursor = chalk.inverse(' ');
 
-export const useTextInput = ({
+export const useEmailInput = ({
 	isFocused = true,
 	state,
 	placeholder = '',
-}: UseTextInputProps): UseTextInputResult => {
+}: UseEmailInputProps): UseTextInputResult => {
 	const renderedPlaceholder = useMemo(() => {
 		if (!isFocused) {
 			return placeholder ? chalk.grey(placeholder) : '';
