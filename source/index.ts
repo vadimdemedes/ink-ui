@@ -11,3 +11,4 @@ export * from './ordered-list/index.js';
 export * from './mask-input/index.js';
 export * from './password-input/index.js';
 export * from './status-message/index.js';
+export * from './alert/index.js';
