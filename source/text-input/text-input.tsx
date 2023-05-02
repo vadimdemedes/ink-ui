@@ -28,6 +28,11 @@ export type TextInputProps = {
 	defaultValue?: string;
 
 	/**
+	 * Suggestions to auto complete the text input.
+	 */
+	suggestions?: string[];
+
+	/**
 	 * Callback when value updates.
 	 */
 	onChange?: (value: string) => void;
@@ -43,11 +48,13 @@ export function TextInput({
 	defaultValue,
 	placeholder = '',
 	mask,
+	suggestions,
 	onChange,
 	onSubmit,
 }: TextInputProps) {
 	const state = useTextInputState({
 		defaultValue,
+		suggestions,
 		onChange,
 		onSubmit,
 	});

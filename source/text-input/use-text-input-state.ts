@@ -1,4 +1,4 @@
-import {useReducer, useCallback, useEffect, type Reducer} from 'react';
+import {useReducer, useCallback, useEffect, type Reducer, useMemo} from 'react';
 
 type State = {
 	value: string;
@@ -80,6 +80,11 @@ export type UseTextInputStateProps = {
 	defaultValue?: string;
 
 	/**
+	 * Suggestions to auto complete the text input.
+	 */
+	suggestions?: string[];
+
+	/**
 	 * Callback when value updates.
 	 */
 	onChange?: (value: string) => void;
@@ -91,6 +96,11 @@ export type UseTextInputStateProps = {
 };
 
 export type TextInputState = State & {
+	/**
+	 * Suggested auto completion.
+	 */
+	suggestion: string | undefined;
+
 	/**
 	 * Move cursor to the left.
 	 */
@@ -119,6 +129,7 @@ export type TextInputState = State & {
 
 export const useTextInputState = ({
 	defaultValue = '',
+	suggestions,
 	onChange,
 	onSubmit,
 }: UseTextInputStateProps) => {
@@ -126,6 +137,16 @@ export const useTextInputState = ({
 		value: defaultValue,
 		cursorOffset: defaultValue.length,
 	});
+
+	const suggestion = useMemo(() => {
+		if (state.value.length === 0) {
+			return;
+		}
+
+		return suggestions
+			?.find(suggestion => suggestion.startsWith(state.value))
+			?.replace(state.value, '');
+	}, [state.value, suggestions]);
 
 	const moveCursorLeft = useCallback(() => {
 		dispatch({
@@ -153,8 +174,13 @@ export const useTextInputState = ({
 	}, []);
 
 	const submit = useCallback(() => {
+		if (suggestion) {
+			onSubmit?.(state.value + suggestion);
+			return;
+		}
+
 		onSubmit?.(state.value);
-	}, [state.value, onSubmit]);
+	}, [state.value, suggestion, onSubmit]);
 
 	useEffect(() => {
 		onChange?.(state.value);
@@ -162,6 +188,7 @@ export const useTextInputState = ({
 
 	return {
 		...state,
+		suggestion,
 		moveCursorLeft,
 		moveCursorRight,
 		insert,

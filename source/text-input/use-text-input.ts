@@ -71,12 +71,24 @@ export const useTextInput = ({
 			index++;
 		}
 
+		if (state.suggestion) {
+			if (state.cursorOffset === value.length) {
+				result +=
+					chalk.inverse(state.suggestion[0]) +
+					chalk.dim(state.suggestion.slice(1));
+			} else {
+				result += chalk.dim(state.suggestion);
+			}
+
+			return result;
+		}
+
 		if (value.length > 0 && state.cursorOffset === value.length) {
 			result += cursor;
 		}
 
 		return result;
-	}, [isFocused, mask, state.value, state.cursorOffset]);
+	}, [isFocused, mask, state.value, state.cursorOffset, state.suggestion]);
 
 	useInput(
 		(input, key) => {
