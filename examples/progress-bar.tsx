@@ -21,7 +21,7 @@ function Example() {
 
 	return (
 		<Box gap={1}>
-			<ProgressBar progress={progress} />
+			<ProgressBar value={progress} />
 
 			<Box width={4}>
 				<Text>{progress}%</Text>

@@ -1,11 +1,11 @@
 import {createContext} from 'react';
-import figures from 'figures';
 
 export type UnorderedListContextProps = {
 	/**
-	 * Markers that are displayed before each list item.
+	 * Marker that's displayed before each list item.
+	 * If an array is provided, each nested list will use the next marker in that array.
 	 */
-	markers: string[];
+	marker: string | string[] | undefined;
 
 	/**
 	 * Depth of the list.
@@ -15,6 +15,6 @@ export type UnorderedListContextProps = {
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const UnorderedListContext = createContext<UnorderedListContextProps>({
-	markers: [figures.line],
+	marker: undefined,
 	depth: 0,
 });

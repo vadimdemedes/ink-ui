@@ -29,7 +29,7 @@
 	],
 	"dependencies": {
 		"chalk": "^5.2.0",
-		"cli-spinners": "^2.8.0",
+		"cli-spinners": "^2.9.0",
 		"figures": "^5.0.0",
 		"react-stately": "^3.22.0"
 	},
@@ -37,16 +37,33 @@
 		"@sindresorhus/tsconfig": "^3.0.1",
 		"@types/react": "^18.2.0",
 		"@vdemedes/prettier-config": "^2.0.1",
+		"ava": "^5.2.0",
+		"boxen": "^7.0.2",
 		"cat-names": "^3.1.0",
+		"delay": "^5.0.0",
 		"eslint-config-xo-react": "^0.27.0",
 		"eslint-plugin-react": "^7.32.2",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"ink": "^4.2.0",
+		"ink-testing-library": "^3.0.0",
 		"prettier": "^2.8.8",
 		"react": "^18.2.0",
 		"ts-node": "^10.9.1",
 		"typescript": "^5.0.4",
 		"xo": "^0.54.1"
+	},
+	"ava": {
+		"extensions": {
+			"ts": "module",
+			"tsx": "module"
+		},
+		"nodeArguments": [
+			"--loader=ts-node/esm"
+		],
+		"environmentVariables": {
+			"NODE_NO_WARNINGS": "1",
+			"FORCE_COLOR": "true"
+		}
 	},
 	"xo": {
 		"extends": [

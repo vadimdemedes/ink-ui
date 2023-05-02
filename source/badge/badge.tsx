@@ -19,7 +19,7 @@ export type BadgeProps = {
 export function Badge({children, color = 'magenta'}: BadgeProps) {
 	const styles = useMultiStyleConfig('Badge', {color});
 
-	let formattedChildren: ReactNode = children;
+	let formattedChildren = children;
 
 	if (typeof children === 'string') {
 		formattedChildren = children.toUpperCase();

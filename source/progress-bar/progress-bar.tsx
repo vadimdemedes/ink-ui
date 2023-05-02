@@ -10,7 +10,7 @@ export type ProgressBarProps = {
 	 *
 	 * @default 0
 	 */
-	progress: number;
+	value: number;
 
 	/**
 	 * Character for rendering a complete bar.
@@ -28,7 +28,7 @@ export type ProgressBarProps = {
 };
 
 export function ProgressBar({
-	progress,
+	value,
 	completeCharacter = figures.square,
 	remainingCharacter = figures.squareLightShade,
 }: ProgressBarProps) {
@@ -45,8 +45,8 @@ export function ProgressBar({
 		}
 	}
 
-	const clampedProgress = Math.min(100, Math.max(0, progress));
-	const complete = Math.round((clampedProgress / 100) * width);
+	const progress = Math.min(100, Math.max(0, value));
+	const complete = Math.round((progress / 100) * width);
 	const remaining = width - complete;
 
 	const styles = useMultiStyleConfig('ProgressBar');

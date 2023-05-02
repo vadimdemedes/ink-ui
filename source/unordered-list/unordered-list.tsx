@@ -24,16 +24,22 @@ export type UnorderedListProps = {
 };
 
 export function UnorderedList({children, marker}: UnorderedListProps) {
-	const {depth, markers} = useContext(UnorderedListContext);
+	const {depth, marker: inheritedMarker} = useContext(UnorderedListContext);
 	const styles = useMultiStyleConfig('UnorderedList');
 
-	const listContext = useMemo(
-		() => ({
-			markers: Array.isArray(marker) ? marker : [marker ?? figures.line],
+	const listContext = useMemo(() => {
+		if (typeof marker === 'string' || Array.isArray(marker)) {
+			return {
+				marker,
+				depth: depth + 1,
+			};
+		}
+
+		return {
+			marker: inheritedMarker,
 			depth: depth + 1,
-		}),
-		[marker, depth],
-	);
+		};
+	}, [marker, inheritedMarker, depth]);
 
 	const listItemContext = useMemo(() => {
 		if (typeof marker === 'string') {
@@ -46,10 +52,22 @@ export function UnorderedList({children, marker}: UnorderedListProps) {
 			};
 		}
 
+		if (typeof inheritedMarker === 'string') {
+			return {
+				marker: inheritedMarker,
+			};
+		}
+
+		if (Array.isArray(inheritedMarker)) {
+			return {
+				marker: inheritedMarker[depth] ?? defaultMarker,
+			};
+		}
+
 		return {
-			marker: markers[depth] ?? defaultMarker,
+			marker: defaultMarker,
 		};
-	}, [marker, markers, depth]);
+	}, [marker, inheritedMarker, depth]);
 
 	return (
 		<UnorderedListContext.Provider value={listContext}>
