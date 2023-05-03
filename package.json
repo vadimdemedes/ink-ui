@@ -21,7 +21,7 @@
 		"dev": "tsc --watch",
 		"build": "tsc",
 		"prepare": "npm run build",
-		"test": "tsc --noEmit && xo",
+		"test": "tsc --noEmit && xo && ava",
 		"example": "NODE_NO_WARNINGS=1 node --loader=ts-node/esm"
 	},
 	"files": [

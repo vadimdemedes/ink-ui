@@ -1,6 +1,7 @@
 import {useReducer, useCallback, useEffect, type Reducer, useMemo} from 'react';
 
 type State = {
+	previousValue: string;
 	value: string;
 	cursorOffset: number;
 };
@@ -51,6 +52,7 @@ const reducer: Reducer<State, Action> = (state, action) => {
 
 			return {
 				...state,
+				previousValue: state.value,
 				value:
 					state.value.slice(0, state.cursorOffset) +
 					action.text +
@@ -64,6 +66,7 @@ const reducer: Reducer<State, Action> = (state, action) => {
 
 			return {
 				...state,
+				previousValue: state.value,
 				value:
 					state.value.slice(0, newCursorOffset) +
 					state.value.slice(newCursorOffset + 1),
@@ -149,6 +152,7 @@ export const useEmailInputState = ({
 	onSubmit,
 }: UseEmailInputStateProps) => {
 	const [state, dispatch] = useReducer(reducer, {
+		previousValue: defaultValue,
 		value: defaultValue,
 		cursorOffset: defaultValue.length,
 	});
@@ -193,16 +197,19 @@ export const useEmailInputState = ({
 
 	const submit = useCallback(() => {
 		if (suggestion) {
+			insert(suggestion);
 			onSubmit?.(state.value + suggestion);
 			return;
 		}
 
 		onSubmit?.(state.value);
-	}, [state.value, suggestion, onSubmit]);
+	}, [state.value, suggestion, insert, onSubmit]);
 
 	useEffect(() => {
-		onChange?.(state.value);
-	}, [state.value, onChange]);
+		if (state.previousValue !== state.value) {
+			onChange?.(state.value);
+		}
+	}, [state.previousValue, state.value, onChange]);
 
 	return {
 		...state,

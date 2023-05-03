@@ -1,6 +1,7 @@
 import {useReducer, useCallback, useEffect, type Reducer} from 'react';
 
 type State = {
+	previousValue: string;
 	value: string;
 	cursorOffset: number;
 };
@@ -47,6 +48,7 @@ const reducer: Reducer<State, Action> = (state, action) => {
 		case 'insert': {
 			return {
 				...state,
+				previousValue: state.value,
 				value:
 					state.value.slice(0, state.cursorOffset) +
 					action.text +
@@ -60,6 +62,7 @@ const reducer: Reducer<State, Action> = (state, action) => {
 
 			return {
 				...state,
+				previousValue: state.value,
 				value:
 					state.value.slice(0, newCursorOffset) +
 					state.value.slice(newCursorOffset + 1),
@@ -117,6 +120,7 @@ export const usePasswordInputState = ({
 	onSubmit,
 }: UseTextInputStateProps) => {
 	const [state, dispatch] = useReducer(reducer, {
+		previousValue: '',
 		value: '',
 		cursorOffset: 0,
 	});
@@ -151,8 +155,10 @@ export const usePasswordInputState = ({
 	}, [state.value, onSubmit]);
 
 	useEffect(() => {
-		onChange?.(state.value);
-	}, [state.value, onChange]);
+		if (state.value !== state.previousValue) {
+			onChange?.(state.value);
+		}
+	}, [state.previousValue, state.value, onChange]);
 
 	return {
 		...state,

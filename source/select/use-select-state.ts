@@ -1,5 +1,12 @@
 import {isDeepStrictEqual} from 'node:util';
-import {useReducer, type Reducer, useCallback, useMemo, useState} from 'react';
+import {
+	useReducer,
+	type Reducer,
+	useCallback,
+	useMemo,
+	useState,
+	useEffect,
+} from 'react';
 import {type Option} from './types.js';
 
 type State = {
@@ -27,6 +34,11 @@ type State = {
 	 * Index of the last visible option.
 	 */
 	visibleToIndex: number;
+
+	/**
+	 * Index of the previously selected option.
+	 */
+	previousSelectedIndex: number | undefined;
 
 	/**
 	 * Index of the selected option.
@@ -116,6 +128,7 @@ const reducer: Reducer<State, Action> = (state, action) => {
 		case 'select-focused-option': {
 			return {
 				...state,
+				previousSelectedIndex: state.selectedIndex,
 				selectedIndex: state.focusedIndex,
 			};
 		}
@@ -201,6 +214,7 @@ const createDefaultState = ({
 		focusedIndex: 0,
 		visibleFromIndex: 0,
 		visibleToIndex: limit,
+		previousSelectedIndex: selectedIndex,
 		selectedIndex,
 	};
 };
@@ -244,13 +258,7 @@ export const useSelectState = ({
 		dispatch({
 			type: 'select-focused-option',
 		});
-
-		const option = options[state.focusedIndex];
-
-		if (option) {
-			onChange?.(option.value);
-		}
-	}, [options, state.focusedIndex, onChange]);
+	}, []);
 
 	const visibleOptions = useMemo(() => {
 		return options
@@ -260,6 +268,16 @@ export const useSelectState = ({
 			}))
 			.slice(state.visibleFromIndex, state.visibleToIndex);
 	}, [options, state.visibleFromIndex, state.visibleToIndex]);
+
+	useEffect(() => {
+		if (state.previousSelectedIndex !== state.selectedIndex) {
+			const option = options[state.focusedIndex];
+
+			if (option) {
+				onChange?.(option.value);
+			}
+		}
+	}, [state.previousSelectedIndex, state.selectedIndex, options, onChange]);
 
 	return {
 		focusedIndex: state.focusedIndex,

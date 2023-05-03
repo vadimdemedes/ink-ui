@@ -41,11 +41,11 @@ export const useEmailInput = ({
 }: UseEmailInputProps): UseTextInputResult => {
 	const renderedPlaceholder = useMemo(() => {
 		if (!isFocused) {
-			return placeholder ? chalk.grey(placeholder) : '';
+			return placeholder ? chalk.dim(placeholder) : '';
 		}
 
 		return placeholder && placeholder.length > 0
-			? chalk.inverse(placeholder[0]) + chalk.grey(placeholder.slice(1))
+			? chalk.inverse(placeholder[0]) + chalk.dim(placeholder.slice(1))
 			: cursor;
 	}, [isFocused, placeholder]);
 

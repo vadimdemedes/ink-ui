@@ -1,5 +1,12 @@
 import {isDeepStrictEqual} from 'node:util';
-import {useReducer, type Reducer, useCallback, useMemo, useState} from 'react';
+import {
+	useReducer,
+	type Reducer,
+	useCallback,
+	useMemo,
+	useState,
+	useEffect,
+} from 'react';
 import {type Option} from './types.js';
 
 type State = {
@@ -27,6 +34,11 @@ type State = {
 	 * Index of the last visible option.
 	 */
 	visibleToIndex: number;
+
+	/**
+	 * Indexes of previously selected options.
+	 */
+	previousSelectedIndexes: number[];
 
 	/**
 	 * Indexes of selected options.
@@ -120,12 +132,14 @@ const reducer: Reducer<State, Action> = (state, action) => {
 
 				return {
 					...state,
+					previousSelectedIndexes: state.selectedIndexes,
 					selectedIndexes: [...newSelectedIndexes],
 				};
 			}
 
 			return {
 				...state,
+				previousSelectedIndexes: state.selectedIndexes,
 				selectedIndexes: [...state.selectedIndexes, state.focusedIndex],
 			};
 		}
@@ -220,6 +234,7 @@ const createDefaultState = ({
 		focusedIndex: 0,
 		visibleFromIndex: 0,
 		visibleToIndex: limit,
+		previousSelectedIndexes: selectedIndexes,
 		selectedIndexes,
 	};
 };
@@ -263,34 +278,7 @@ export const useMultiSelectState = ({
 		dispatch({
 			type: 'toggle-focused-option',
 		});
-
-		if (typeof onChange === 'function') {
-			const isAlreadySelected = state.selectedIndexes.includes(
-				state.focusedIndex,
-			);
-
-			let selectedOptions: Option[];
-
-			if (isAlreadySelected) {
-				selectedOptions = options.filter((_option, index) => {
-					return (
-						state.selectedIndexes.includes(index) &&
-						index !== state.focusedIndex
-					);
-				});
-			} else {
-				selectedOptions = options.filter((_option, index) => {
-					return (
-						state.selectedIndexes.includes(index) &&
-						index === state.focusedIndex
-					);
-				});
-			}
-
-			const newValue = selectedOptions.map(option => option.value);
-			onChange(newValue);
-		}
-	}, [options, state.focusedIndex, state.selectedIndexes, onChange]);
+	}, []);
 
 	const visibleOptions = useMemo(() => {
 		return options
@@ -300,6 +288,20 @@ export const useMultiSelectState = ({
 			}))
 			.slice(state.visibleFromIndex, state.visibleToIndex);
 	}, [options, state.visibleFromIndex, state.visibleToIndex]);
+
+	useEffect(() => {
+		if (
+			!isDeepStrictEqual(state.previousSelectedIndexes, state.selectedIndexes)
+		) {
+			const values = options
+				.filter((_option, index) => {
+					return state.selectedIndexes.includes(index);
+				})
+				.map(option => option.value);
+
+			onChange?.(values);
+		}
+	}, [state.previousSelectedIndexes, state.selectedIndexes, options, onChange]);
 
 	return {
 		focusedIndex: state.focusedIndex,
