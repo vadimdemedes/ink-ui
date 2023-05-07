@@ -1,6 +1,6 @@
 {
 	"name": "@inkjs/ui",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"description": "Collection of customizable UI components for CLIs made with Ink",
 	"license": "MIT",
 	"repository": "vadimdemedes/ink-ui",
