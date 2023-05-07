@@ -1,0 +1,87 @@
+{
+	"name": "@inkjs/ui",
+	"version": "0.0.0",
+	"description": "Collection of customizable UI components for CLIs made with Ink",
+	"license": "MIT",
+	"repository": "vadimdemedes/ink-ui",
+	"author": {
+		"name": "Vadim Demedes",
+		"email": "vadimdemedes@hey.com",
+		"url": "https://github.com/vadimdemedes"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"type": "module",
+	"exports": {
+		"types": "./build/index.d.ts",
+		"default": "./build/index.js"
+	},
+	"engines": {
+		"node": ">=14.16"
+	},
+	"scripts": {
+		"dev": "tsc --watch",
+		"build": "tsc",
+		"prepare": "npm run build",
+		"test": "tsc --noEmit && xo && ava",
+		"example": "NODE_NO_WARNINGS=1 node --loader=ts-node/esm"
+	},
+	"files": [
+		"build"
+	],
+	"dependencies": {
+		"chalk": "^5.2.0",
+		"cli-spinners": "^2.9.0",
+		"deepmerge": "^4.3.1",
+		"figures": "^5.0.0"
+	},
+	"devDependencies": {
+		"@sindresorhus/tsconfig": "^3.0.1",
+		"@types/react": "^18.2.0",
+		"@vdemedes/prettier-config": "^2.0.1",
+		"ava": "^5.2.0",
+		"boxen": "^7.0.2",
+		"cat-names": "^3.1.0",
+		"delay": "^5.0.0",
+		"eslint-config-xo-react": "^0.27.0",
+		"eslint-plugin-react": "^7.32.2",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"ink": "^4.2.0",
+		"ink-testing-library": "^3.0.0",
+		"prettier": "^2.8.8",
+		"react": "^18.2.0",
+		"ts-node": "^10.9.1",
+		"typescript": "^5.0.4",
+		"xo": "^0.54.1"
+	},
+	"peerDependencies": {
+		"ink": "^4.2.0"
+	},
+	"ava": {
+		"extensions": {
+			"ts": "module",
+			"tsx": "module"
+		},
+		"nodeArguments": [
+			"--loader=ts-node/esm"
+		],
+		"environmentVariables": {
+			"NODE_NO_WARNINGS": "1",
+			"FORCE_COLOR": "true"
+		}
+	},
+	"xo": {
+		"extends": [
+			"xo-react"
+		],
+		"plugins": [
+			"react"
+		],
+		"prettier": true,
+		"rules": {
+			"react/no-unescaped-entities": "off"
+		}
+	},
+	"prettier": "@vdemedes/prettier-config"
+}
