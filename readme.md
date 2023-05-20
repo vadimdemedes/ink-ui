@@ -1,3 +1,5 @@
+[![](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
+
 # Ink UI [![test](https://github.com/vadimdemedes/ink-ui/actions/workflows/test.yml/badge.svg)](https://github.com/vadimdemedes/ink-ui/actions/workflows/test.yml)
 
 > Collection of customizable UI components for CLIs made with [Ink](https://term.ink).
