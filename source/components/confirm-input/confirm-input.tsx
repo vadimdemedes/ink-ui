@@ -16,7 +16,7 @@ export type ConfirmInputProps = {
 	 *
 	 * @default "confirm"
 	 */
-	defaultChoice?: 'confirm' | 'cancel';
+	defaultChoice?: 'confirm' | 'cancel' | 'unset';
 
 	/**
 	 * Confirm or cancel when user presses enter, depending on the `defaultChoice` value.
@@ -44,6 +44,12 @@ export function ConfirmInput({
 	onConfirm,
 	onCancel,
 }: ConfirmInputProps) {
+	const choicePrompts = {
+		confirm: 'Y/n',
+		cancel: 'y/N',
+		unset: 'y/n',
+	};
+
 	useInput(
 		(input, key) => {
 			if (input.toLowerCase() === 'y') {
@@ -55,10 +61,20 @@ export function ConfirmInput({
 			}
 
 			if (key.return && submitOnEnter) {
-				if (defaultChoice === 'confirm') {
-					onConfirm();
-				} else {
-					onCancel();
+				switch (defaultChoice) {
+					case 'confirm': {
+						onConfirm();
+						break;
+					}
+
+					case 'cancel': {
+						onCancel();
+						break;
+					}
+
+					default: {
+						break;
+					}
 				}
 			}
 		},
@@ -69,7 +85,7 @@ export function ConfirmInput({
 
 	return (
 		<Text {...styles.input({isFocused: !isDisabled})}>
-			{defaultChoice === 'confirm' ? 'Y/n' : 'y/N'}
+			{choicePrompts[defaultChoice]}
 		</Text>
 	);
 }
