@@ -50,7 +50,7 @@ When disabled, user input is ignored.
 
 ### defaultChoice
 
-Type: `'confirm' | 'cancel'`\
+Type: `'confirm' | 'cancel' | 'unset'`\
 Default: `'confirm'`
 
 Default choice.
