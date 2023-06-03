@@ -223,3 +223,69 @@ test('cancel with disabled enter', async t => {
 	t.false(confirmed);
 	t.true(cancelled);
 });
+
+test('unset the default choice, confirm via "y"', async t => {
+	let confirmed = false;
+	let cancelled = false;
+
+	const {lastFrame, stdin} = render(
+		<ConfirmInput
+			defaultChoice="unset"
+			onConfirm={() => {
+				confirmed = true;
+			}}
+			onCancel={() => {
+				cancelled = true;
+			}}
+		/>,
+	);
+
+	t.is(lastFrame(), 'y/n');
+
+	await delay(50);
+	stdin.write(enter);
+	await delay(50);
+
+	t.false(confirmed);
+	t.false(cancelled);
+
+	await delay(50);
+	stdin.write('y');
+	await delay(50);
+
+	t.true(confirmed);
+	t.false(cancelled);
+});
+
+test('unset the default choice, cancle via "n"', async t => {
+	let confirmed = false;
+	let cancelled = false;
+
+	const {lastFrame, stdin} = render(
+		<ConfirmInput
+			defaultChoice="unset"
+			onConfirm={() => {
+				confirmed = true;
+			}}
+			onCancel={() => {
+				cancelled = true;
+			}}
+		/>,
+	);
+
+	t.is(lastFrame(), 'y/n');
+
+	await delay(50);
+	stdin.write(enter);
+	await delay(50);
+
+	t.false(confirmed);
+	t.false(cancelled);
+
+	await delay(50);
+	stdin.write('n');
+	await delay(50);
+
+	t.false(confirmed);
+	t.true(cancelled);
+});
