@@ -51,7 +51,7 @@ function Example() {
 					<TextInput onChange={setFilterText} />
 
 					<Select
-						defaultLimit={5}
+						visibleOptionCount={3}
 						highlightText={filterText}
 						options={options}
 						onChange={setValue}

@@ -1,4 +1,5 @@
-import React, {render, Text, type TextProps} from 'ink';
+import React from 'react';
+import {render, Text, type TextProps} from 'ink';
 import {
 	ThemeProvider,
 	defaultTheme,
