@@ -8,7 +8,7 @@ export type UnorderedListItemProps = {
 	/**
 	 * List item content.
 	 */
-	children: ReactNode;
+	readonly children: ReactNode;
 };
 
 export function UnorderedListItem({children}: UnorderedListItemProps) {

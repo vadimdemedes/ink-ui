@@ -11,32 +11,32 @@ export type TextInputProps = {
 	 *
 	 * @default false
 	 */
-	isDisabled?: boolean;
+	readonly isDisabled?: boolean;
 
 	/**
 	 * Text to display when input is empty.
 	 */
-	placeholder?: string;
+	readonly placeholder?: string;
 
 	/**
 	 * Default input value.
 	 */
-	defaultValue?: string;
+	readonly defaultValue?: string;
 
 	/**
 	 * Suggestions to autocomplete the input value.
 	 */
-	suggestions?: string[];
+	readonly suggestions?: string[];
 
 	/**
 	 * Callback when input value changes.
 	 */
-	onChange?: (value: string) => void;
+	readonly onChange?: (value: string) => void;
 
 	/**
 	 * Callback when enter is pressed. First argument is input value.
 	 */
-	onSubmit?: (value: string) => void;
+	readonly onSubmit?: (value: string) => void;
 };
 
 export function TextInput({

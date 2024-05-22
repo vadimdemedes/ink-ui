@@ -7,14 +7,14 @@ export type BadgeProps = {
 	/**
 	 * Label.
 	 */
-	children: ReactNode;
+	readonly children: ReactNode;
 
 	/**
 	 * Color.
 	 *
 	 * @default "magenta"
 	 */
-	color?: TextProps['color'];
+	readonly color?: TextProps['color'];
 };
 
 export function Badge({children, color = 'magenta'}: BadgeProps) {

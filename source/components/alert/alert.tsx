@@ -7,17 +7,17 @@ export type AlertProps = {
 	/**
 	 * Message.
 	 */
-	children: ReactNode;
+	readonly children: ReactNode;
 
 	/**
 	 * Variant, which determines the color of the alert.
 	 */
-	variant: 'info' | 'success' | 'error' | 'warning';
+	readonly variant: 'info' | 'success' | 'error' | 'warning';
 
 	/**
 	 * Title to show above the message.
 	 */
-	title?: string;
+	readonly title?: string;
 };
 
 export function Alert({children, variant, title}: AlertProps) {

@@ -11,22 +11,22 @@ export type PasswordInputProps = {
 	 *
 	 * @default false
 	 */
-	isDisabled?: boolean;
+	readonly isDisabled?: boolean;
 
 	/**
 	 * Text to display when `value` is empty.
 	 */
-	placeholder?: string;
+	readonly placeholder?: string;
 
 	/**
 	 * Callback when value updates.
 	 */
-	onChange?: (value: string) => void;
+	readonly onChange?: (value: string) => void;
 
 	/**
 	 * Callback when `Enter` is pressed. First argument is a value of the input.
 	 */
-	onSubmit?: (value: string) => void;
+	readonly onSubmit?: (value: string) => void;
 };
 
 export function PasswordInput({

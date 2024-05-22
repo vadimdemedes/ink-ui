@@ -166,10 +166,6 @@ const reducer: Reducer<State, Action> = (state, action) => {
 		case 'reset': {
 			return action.state;
 		}
-
-		default: {
-			return state;
-		}
 	}
 };
 

@@ -8,12 +8,12 @@ export type StatusMessageProps = {
 	/**
 	 * Message.
 	 */
-	children: ReactNode;
+	readonly children: ReactNode;
 
 	/**
 	 * Variant, which determines the color used in the status message.
 	 */
-	variant: StatusMessageVariant;
+	readonly variant: StatusMessageVariant;
 };
 
 export function StatusMessage({children, variant}: StatusMessageProps) {

@@ -13,34 +13,34 @@ export type SelectProps = {
 	 *
 	 * @default false
 	 */
-	isDisabled?: boolean;
+	readonly isDisabled?: boolean;
 
 	/**
 	 * Number of visible options.
 	 *
 	 * @default 5
 	 */
-	visibleOptionCount?: number;
+	readonly visibleOptionCount?: number;
 
 	/**
 	 * Highlight text in option labels.
 	 */
-	highlightText?: string;
+	readonly highlightText?: string;
 
 	/**
 	 * Options.
 	 */
-	options: Option[];
+	readonly options: Option[];
 
 	/**
 	 * Default value.
 	 */
-	defaultValue?: string;
+	readonly defaultValue?: string;
 
 	/**
 	 * Callback when selected option changes.
 	 */
-	onChange?: (value: string) => void;
+	readonly onChange?: (value: string) => void;
 };
 
 export function Select({

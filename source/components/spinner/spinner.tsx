@@ -8,7 +8,7 @@ export type SpinnerProps = UseSpinnerProps & {
 	/**
 	 * Label to show near the spinner.
 	 */
-	label?: string;
+	readonly label?: string;
 };
 
 export function Spinner({label, type}: SpinnerProps) {

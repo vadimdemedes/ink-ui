@@ -13,41 +13,41 @@ export type MultiSelectProps = {
 	 *
 	 * @default false
 	 */
-	isDisabled?: boolean;
+	readonly isDisabled?: boolean;
 
 	/**
 	 * Number of visible options.
 	 *
 	 * @default 5
 	 */
-	visibleOptionCount?: number;
+	readonly visibleOptionCount?: number;
 
 	/**
 	 * Highlight text in option labels.
 	 * Useful for filtering options.
 	 */
-	highlightText?: string;
+	readonly highlightText?: string;
 
 	/**
 	 * Options.
 	 */
-	options: Option[];
+	readonly options: Option[];
 
 	/**
 	 * Initially selected option values.
 	 */
-	defaultValue?: string[];
+	readonly defaultValue?: string[];
 
 	/**
 	 * Callback for selecting options.
 	 */
-	onChange?: (value: string[]) => void;
+	readonly onChange?: (value: string[]) => void;
 
 	/**
 	 * Callback when user presses enter.
 	 * First argument is an array of selected option values.
 	 */
-	onSubmit?: (value: string[]) => void;
+	readonly onSubmit?: (value: string[]) => void;
 };
 
 export function MultiSelect({

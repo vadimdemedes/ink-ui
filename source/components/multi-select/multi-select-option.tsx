@@ -8,17 +8,17 @@ export type MultiSelectOptionProps = {
 	/**
 	 * Determines if option is focused.
 	 */
-	isFocused: boolean;
+	readonly isFocused: boolean;
 
 	/**
 	 * Determines if option is selected.
 	 */
-	isSelected: boolean;
+	readonly isSelected: boolean;
 
 	/**
 	 * Option label.
 	 */
-	children: ReactNode;
+	readonly children: ReactNode;
 };
 
 export function MultiSelectOption({

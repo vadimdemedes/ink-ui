@@ -8,7 +8,7 @@ export type OrderedListItemProps = {
 	/**
 	 * List item content.
 	 */
-	children: ReactNode;
+	readonly children: ReactNode;
 };
 
 export function OrderedListItem({children}: OrderedListItemProps) {

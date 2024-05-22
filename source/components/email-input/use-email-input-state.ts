@@ -73,10 +73,6 @@ const reducer: Reducer<State, Action> = (state, action) => {
 				cursorOffset: newCursorOffset,
 			};
 		}
-
-		default: {
-			return state;
-		}
 	}
 };
 

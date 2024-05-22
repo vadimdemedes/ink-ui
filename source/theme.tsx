@@ -46,8 +46,8 @@ export const defaultTheme: Theme = {
 export const ThemeContext = createContext<Theme>(defaultTheme);
 
 export type ThemeProviderProps = {
-	children: ReactNode;
-	theme: Theme;
+	readonly children: ReactNode;
+	readonly theme: Theme;
 };
 
 export function ThemeProvider({children, theme}: ThemeProviderProps) {

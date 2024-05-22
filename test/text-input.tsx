@@ -4,7 +4,7 @@ import test from 'ava';
 import {render} from 'ink-testing-library';
 import chalk from 'chalk';
 import delay from 'delay';
-import catNames from 'cat-names';
+import {catNames} from 'cat-names';
 import {TextInput} from '../source/index.js';
 
 const cursor = (character = ' ') => chalk.inverse(character);
@@ -302,7 +302,7 @@ test('autocomplete', async t => {
 	const {lastFrame, stdin} = render(
 		<TextInput
 			placeholder="Start typing..."
-			suggestions={catNames.all as string[]}
+			suggestions={catNames as string[]}
 			onChange={newValue => {
 				value = newValue;
 			}}

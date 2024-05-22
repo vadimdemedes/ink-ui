@@ -11,34 +11,34 @@ export type EmailInputProps = {
 	 *
 	 * @default false
 	 */
-	isDisabled?: boolean;
+	readonly isDisabled?: boolean;
 
 	/**
 	 * Text to display when input is empty.
 	 */
-	placeholder?: string;
+	readonly placeholder?: string;
 
 	/**
 	 * Default input value.
 	 */
-	defaultValue?: string;
+	readonly defaultValue?: string;
 
 	/**
 	 * Domains of email providers to autocomplete.
 	 *
 	 * @default ["aol.com", "gmail.com", "yahoo.com", "hotmail.com", "live.com", "outlook.com", "icloud.com", "hey.com"]
 	 */
-	domains?: string[];
+	readonly domains?: string[];
 
 	/**
 	 * Callback when input value changes.
 	 */
-	onChange?: (value: string) => void;
+	readonly onChange?: (value: string) => void;
 
 	/**
 	 * Callback when enter is pressed. First argument is input value.
 	 */
-	onSubmit?: (value: string) => void;
+	readonly onSubmit?: (value: string) => void;
 };
 
 export function EmailInput({

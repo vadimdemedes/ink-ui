@@ -11,7 +11,7 @@ export type UnorderedListProps = {
 	/**
 	 * List items.
 	 */
-	children: ReactNode;
+	readonly children: ReactNode;
 };
 
 export function UnorderedList({children}: UnorderedListProps) {
@@ -34,7 +34,7 @@ export function UnorderedList({children}: UnorderedListProps) {
 
 		if (Array.isArray(marker)) {
 			return {
-				marker: marker[depth] ?? marker[marker.length - 1] ?? defaultMarker,
+				marker: marker[depth] ?? marker.at(-1) ?? defaultMarker,
 			};
 		}
 

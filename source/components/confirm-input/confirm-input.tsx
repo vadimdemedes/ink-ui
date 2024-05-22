@@ -9,14 +9,14 @@ export type ConfirmInputProps = {
 	 *
 	 * @default false
 	 */
-	isDisabled?: boolean;
+	readonly isDisabled?: boolean;
 
 	/**
 	 * Default choice.
 	 *
 	 * @default "confirm"
 	 */
-	defaultChoice?: 'confirm' | 'cancel';
+	readonly defaultChoice?: 'confirm' | 'cancel';
 
 	/**
 	 * Confirm or cancel when user presses enter, depending on the `defaultChoice` value.
@@ -24,17 +24,17 @@ export type ConfirmInputProps = {
 	 *
 	 * @default true
 	 */
-	submitOnEnter?: boolean; // eslint-disable-line react/boolean-prop-naming
+	readonly submitOnEnter?: boolean; // eslint-disable-line react/boolean-prop-naming
 
 	/**
 	 * Callback to trigger on confirmation.
 	 */
-	onConfirm: () => void;
+	readonly onConfirm: () => void;
 
 	/**
 	 * Callback to trigger on cancellation.
 	 */
-	onCancel: () => void;
+	readonly onCancel: () => void;
 };
 
 export function ConfirmInput({

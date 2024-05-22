@@ -10,7 +10,7 @@ export type ProgressBarProps = {
 	 *
 	 * @default 0
 	 */
-	value: number;
+	readonly value: number;
 };
 
 export function ProgressBar({value}: ProgressBarProps) {

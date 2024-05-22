@@ -16,7 +16,7 @@ test('spinner', async t => {
 
 	const uniqueFrames = [...new Set(frames)];
 
-	if (process.env['CI'] && uniqueFrames[uniqueFrames.length - 1] === '\n') {
+	if (process.env['CI'] && uniqueFrames.at(-1) === '\n') {
 		uniqueFrames.pop();
 	}
 

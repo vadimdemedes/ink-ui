@@ -18,45 +18,45 @@
 		"default": "./build/index.js"
 	},
 	"engines": {
-		"node": ">=14.16"
+		"node": ">=18"
 	},
 	"scripts": {
 		"dev": "tsc --watch",
 		"build": "tsc",
 		"prepare": "npm run build",
 		"test": "tsc --noEmit && xo && ava",
-		"example": "NODE_NO_WARNINGS=1 node --loader=ts-node/esm"
+		"example": "NODE_NO_WARNINGS=1 node --import=tsimp"
 	},
 	"files": [
 		"build"
 	],
 	"dependencies": {
-		"chalk": "^5.2.0",
-		"cli-spinners": "^2.9.0",
+		"chalk": "^5.3.0",
+		"cli-spinners": "^3.0.0",
 		"deepmerge": "^4.3.1",
-		"figures": "^5.0.0"
+		"figures": "^6.1.0"
 	},
 	"devDependencies": {
-		"@sindresorhus/tsconfig": "^3.0.1",
-		"@types/react": "^18.2.0",
+		"@sindresorhus/tsconfig": "^5.0.0",
+		"@types/react": "^18.3.2",
 		"@vdemedes/prettier-config": "^2.0.1",
 		"ava": "^5.2.0",
-		"boxen": "^7.0.2",
-		"cat-names": "^3.1.0",
-		"delay": "^5.0.0",
+		"boxen": "^7.1.1",
+		"cat-names": "^4.0.0",
+		"delay": "^6.0.0",
 		"eslint-config-xo-react": "^0.27.0",
-		"eslint-plugin-react": "^7.32.2",
-		"eslint-plugin-react-hooks": "^4.6.0",
-		"ink": "^4.2.0",
-		"ink-testing-library": "^3.0.0",
-		"prettier": "^2.8.8",
-		"react": "^18.2.0",
-		"ts-node": "^10.9.1",
-		"typescript": "^5.0.4",
-		"xo": "^0.54.1"
+		"eslint-plugin-react": "^7.34.1",
+		"eslint-plugin-react-hooks": "^4.6.2",
+		"ink": "^5.0.0",
+		"ink-testing-library": "^4.0.0",
+		"prettier": "^3.2.5",
+		"react": "^18.3.1",
+		"tsimp": "^2.0.11",
+		"typescript": "^5.4.5",
+		"xo": "^0.58.0"
 	},
 	"peerDependencies": {
-		"ink": "^4.2.0"
+		"ink": ">=5"
 	},
 	"ava": {
 		"extensions": {
@@ -64,7 +64,7 @@
 			"tsx": "module"
 		},
 		"nodeArguments": [
-			"--loader=ts-node/esm"
+			"--import=tsimp"
 		],
 		"environmentVariables": {
 			"NODE_NO_WARNINGS": "1",
@@ -80,7 +80,8 @@
 		],
 		"prettier": true,
 		"rules": {
-			"react/no-unescaped-entities": "off"
+			"react/no-unescaped-entities": "off",
+			"unicorn/prevent-abbreviations": "off"
 		}
 	},
 	"prettier": "@vdemedes/prettier-config"
